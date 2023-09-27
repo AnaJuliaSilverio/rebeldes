@@ -14,19 +14,25 @@ import java.util.List;
 
 @Service
 public class RebelliousService {
-
     @Autowired
-   RebelliousRepository repository;
-    public Rebellious createNewRebellious(Rebellious rebellious){
-        return repository.save(rebellious);
+    VoteTraitorsService voteTraitors;
+    @Autowired
+    RebelliousRepository repository;
+
+    public Rebellious createNewRebellious(Rebellious rebellious) {
+        Rebellious save = repository.save(rebellious);
+        voteTraitors.createVoteTraitors(save);
+        return save;
     }
-    public List<Rebellious> getAllRebellious(){
+
+    public List<Rebellious> getAllRebellious() {
         return repository.findAll();
     }
-    public Rebellious updateRebellious(Rebellious rebellious){
+
+    public Rebellious updateRebellious(Rebellious rebellious) {
         Rebellious rebellious1 = repository.findById(rebellious.getId()).orElseThrow(() -> new EntityNotFoundException("Rebelde não encontrado"));
         rebellious1.setLocation(rebellious.getLocation());
-       return repository.save(rebellious1);
+        return repository.save(rebellious1);
     }
 
 //    public void reportRebellius(Long idReport, Long idRebellious){
