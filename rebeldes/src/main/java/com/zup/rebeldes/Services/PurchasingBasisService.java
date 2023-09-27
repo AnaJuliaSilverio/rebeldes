@@ -1,9 +1,7 @@
 package com.zup.rebeldes.Services;
 
 import com.zup.rebeldes.Models.PurchasingBasis;
-import com.zup.rebeldes.Models.Rebellious;
 import com.zup.rebeldes.Repositories.PurchasingBasisRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +19,5 @@ public class PurchasingBasisService {
     public List<PurchasingBasis> getAlls(){
         return purchasingBasisRepository.findAll();
     }
-
 
 }
