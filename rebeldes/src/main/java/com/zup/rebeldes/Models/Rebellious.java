@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "rebel")
+@Entity
 @Table(name = "rebel")
 @EqualsAndHashCode(of = "id")
 public class Rebellious {
@@ -25,7 +25,7 @@ public class Rebellious {
     private Boolean status = false;
     @Column(nullable = false)
     private String location;
-    @OneToOne(mappedBy = "inventory")
+    @OneToOne(mappedBy = "idRebel")
     private Inventory idInventory;
 
 }

@@ -12,11 +12,6 @@ import org.springframework.web.bind.annotation.*;
 public class InventoryController {
     @Autowired
     InventoryService inventoryService;
-    @PostMapping
-    public ResponseEntity<Inventory> createInventory(@PathVariable(value = "id")Long id, @RequestBody Inventory inventory){
-        Inventory inventory1 = inventoryService.createInventory(id, inventory);
-        return ResponseEntity.status(HttpStatus.CREATED).body(inventory1);
-    }
     @PutMapping
     public ResponseEntity<Inventory> updateInventory(@PathVariable(value = "id")Long id, @RequestBody Inventory inventory){
         Inventory inventory1 = inventoryService.updateInventory(inventory);

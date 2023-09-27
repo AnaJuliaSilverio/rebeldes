@@ -8,7 +8,7 @@ CREATE TABLE rebel(
     name VARCHAR(250) NOT NULL,
     age INTEGER NOT NULL,
     gender VARCHAR(20) NOT NULL,
-    status BIT NOT NULL DEFAULT FALSE,
+    status BOOLEAN NOT NULL DEFAULT FALSE,
     location VARCHAR(250) NOT NULL
 );
 CREATE TABLE inventory(

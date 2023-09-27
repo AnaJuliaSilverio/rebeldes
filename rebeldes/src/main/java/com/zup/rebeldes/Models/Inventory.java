@@ -11,16 +11,16 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "inventory")
+@Entity
 @Table(name = "inventory")
 @EqualsAndHashCode(of = "id")
 public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @OneToOne(cascade=CascadeType.PERSIST)
     @JoinColumn (name = "fk_rebel")
     private Rebellious idRebel;
-    @OneToMany(mappedBy = "inventory",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy ="idInventory",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PurchasingInventory> purchasingInventories;
 }

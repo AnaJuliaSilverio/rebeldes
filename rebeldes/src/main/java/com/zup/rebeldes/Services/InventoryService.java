@@ -14,14 +14,6 @@ public class InventoryService {
     private InventoryRepository inventoryRepository;
     @Autowired
     private RebelliousService rebelliousService;
-    @Autowired
-    RebelliousRepository repository;
-
-    public Inventory createInventory(Long id, Inventory inventory) {
-        Rebellious rebellious1 = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Rebelde não encontrado"));
-        inventory.setIdRebel(rebellious1);
-        return inventoryRepository.save(inventory);
-    }
 
     public Inventory updateInventory(Inventory inventory) {
         Inventory inventory1 = inventoryRepository.findById(inventory.getId()).orElseThrow(() -> new EntityNotFoundException("inventário não encontrado"));

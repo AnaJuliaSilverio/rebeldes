@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "vote_traitors")
+@Entity
 @Table(name = "vote_traitors")
 @EqualsAndHashCode(of = "id")
 public class VoteTraitors {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @OneToOne(cascade=CascadeType.PERSIST)
     @JoinColumn (name = "fk_rebel")
     private Rebellious idRebel;
     @Column (nullable = false)

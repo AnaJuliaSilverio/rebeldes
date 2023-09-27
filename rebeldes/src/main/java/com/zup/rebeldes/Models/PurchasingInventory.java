@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "purchasing_inventory")
+@Entity
 @Table(name = "purchasing_inventory")
 @EqualsAndHashCode(of = "id")
 public class PurchasingInventory {
