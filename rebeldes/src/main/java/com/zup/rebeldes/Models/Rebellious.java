@@ -25,8 +25,7 @@ public class Rebellious {
     private Boolean status = false;
     @Column(nullable = false)
     private String location;
-    @OneToOne
-    @JoinColumn (name = "fk_Inventory")
+    @OneToOne(mappedBy = "inventory")
     private Inventory idInventory;
 
 }

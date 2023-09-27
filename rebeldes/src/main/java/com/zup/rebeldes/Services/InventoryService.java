@@ -13,6 +13,8 @@ public class InventoryService {
     @Autowired
     private InventoryRepository inventoryRepository;
     @Autowired
+    private RebelliousService rebelliousService;
+    @Autowired
     RebelliousRepository repository;
 
     public Inventory createInventory(Long id, Inventory inventory) {
@@ -23,7 +25,13 @@ public class InventoryService {
 
     public Inventory updateInventory(Inventory inventory) {
         Inventory inventory1 = inventoryRepository.findById(inventory.getId()).orElseThrow(() -> new EntityNotFoundException("inventário não encontrado"));
+        Rebellious idRebel = inventory1.getIdRebel();
+        checksStatusRebel(idRebel.getId());
         inventory1.setPurchasingInventories(inventory.getPurchasingInventories());
         return inventory1;
+    }
+    public void checksStatusRebel(Long idRebel){
+        Rebellious rebellious = rebelliousService.findById(idRebel);
+        if (rebellious.getStatus()) throw new IllegalArgumentException("Traidores não podem comprar");
     }
 }

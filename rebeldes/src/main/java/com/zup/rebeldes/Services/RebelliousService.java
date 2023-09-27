@@ -27,7 +27,8 @@ public class RebelliousService {
         Rebellious save = repository.save(rebellious);
         voteTraitors.createVoteTraitors(save);
         inventory.setIdRebel(save);
-        inventoryService.createInventory(save.getId(), inventory);
+        Inventory inventory1 = inventoryService.createInventory(save.getId(), inventory);
+        save.setIdInventory(inventory1);
         return save;
     }
 
@@ -39,6 +40,9 @@ public class RebelliousService {
         Rebellious rebellious1 = repository.findById(rebellious.getId()).orElseThrow(() -> new EntityNotFoundException("Rebelde não encontrado"));
         rebellious1.setLocation(rebellious.getLocation());
         return repository.save(rebellious1);
+    }
+    public Rebellious findById(Long id){
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Rebelde não encontrado"));
     }
 
     public void reportRebellius(Long idReport, Long idRebellious){
