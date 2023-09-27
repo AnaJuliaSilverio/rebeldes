@@ -23,8 +23,10 @@ public class Rebellious {
     private String gender;
     @Column(nullable = false)
     private Boolean status;
-
     @Column(nullable = false)
     private String location;
+    @OneToOne
+    @JoinColumn (name = "fk_Inventory")
+    private Inventory idInventory;
 
 }

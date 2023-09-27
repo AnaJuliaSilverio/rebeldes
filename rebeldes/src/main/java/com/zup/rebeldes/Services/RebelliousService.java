@@ -1,5 +1,6 @@
 package com.zup.rebeldes.Services;
 
+import com.zup.rebeldes.Models.Inventory;
 import com.zup.rebeldes.Models.Rebellious;
 import com.zup.rebeldes.Repositories.RebelliousRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -18,10 +19,14 @@ public class RebelliousService {
     VoteTraitorsService voteTraitors;
     @Autowired
     RebelliousRepository repository;
+    @Autowired
+    InventoryService inventoryService;
 
-    public Rebellious createNewRebellious(Rebellious rebellious) {
+    public Rebellious createNewRebellious(Rebellious rebellious, Inventory inventory) {
         Rebellious save = repository.save(rebellious);
         voteTraitors.createVoteTraitors(save);
+        inventory.setIdRebel(save);
+        inventoryService.createInventory(save.getId(), inventory);
         return save;
     }
 
