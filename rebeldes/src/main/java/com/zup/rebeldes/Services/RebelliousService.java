@@ -2,6 +2,7 @@ package com.zup.rebeldes.Services;
 
 import com.zup.rebeldes.Models.Inventory;
 import com.zup.rebeldes.Models.Rebellious;
+import com.zup.rebeldes.Models.VoteTraitors;
 import com.zup.rebeldes.Repositories.RebelliousRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,18 @@ public class RebelliousService {
         return repository.save(rebellious1);
     }
 
-//    public void reportRebellius(Long idReport, Long idRebellious){
-//
-//    }
+    public void reportRebellius(Long idReport, Long idRebellious){
+        Rebellious report = repository.findById(idReport).orElseThrow(() -> new EntityNotFoundException("Rebelde não encontrado"));
+        Rebellious beingReported = repository.findById(idRebellious).orElseThrow(() -> new EntityNotFoundException("Rebelde não encontrado"));
+        voteTraitors.increaseVotes(idRebellious);
+        VoteTraitors voteTraitors1 = voteTraitors.getVoteTraitors(idRebellious);
+        if (voteTraitors1.getVotes() == 3){
+            setStatus(beingReported);
+        }
+    }
+    public void setStatus(Rebellious rebellious){
+        rebellious.setStatus(true);
+        repository.save(rebellious);
+    }
 
 }

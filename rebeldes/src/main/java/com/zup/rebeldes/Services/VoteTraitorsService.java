@@ -22,4 +22,8 @@ public class VoteTraitorsService {
         voteTraitors1.setIdRebel(rebellious);
         voteTraitorsRepository.save(voteTraitors1);
     }
+    public VoteTraitors getVoteTraitors(Long id){
+        VoteTraitors voteTraitors = voteTraitorsRepository.findVoteTraitors(id).orElseThrow(() -> new EntityNotFoundException("Tabela não encontrado"));
+        return voteTraitors;
+    }
 }
