@@ -23,6 +23,7 @@ public class InventoryService {
         return inventoryRepository.save(inventory);
     }
 
+
     public Inventory updateInventory(Inventory inventory) {
         Inventory inventory1 = inventoryRepository.findById(inventory.getId()).orElseThrow(() -> new EntityNotFoundException("inventário não encontrado"));
         Rebellious idRebel = inventory1.getIdRebel();
