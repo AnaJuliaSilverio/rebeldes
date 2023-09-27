@@ -22,7 +22,7 @@ public class Rebellious {
     @Column(nullable = false)
     private String gender;
     @Column(nullable = false)
-    private Boolean status;
+    private Boolean status = false;
     @Column(nullable = false)
     private String location;
     @OneToOne
