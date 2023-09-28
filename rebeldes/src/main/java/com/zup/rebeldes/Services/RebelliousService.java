@@ -54,6 +54,7 @@ public class RebelliousService {
     public RebelliousResponse updateRebellious(RebelliousResponse rebelliousResponse) {
         Rebellious rebellious = rebelliousRepository.findById(rebelliousResponse.getId()).orElseThrow(() -> new EntityNotFoundException("Rebelde não encontrado"));
         rebellious.setLocation(rebelliousResponse.getLocation());
+        rebelliousRepository.save(rebellious);
         return rebelliousResponse;
     }
     public Rebellious findById(Long id){

@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "sistema para compartilhar recursos entre os rebeldes.", version = "1", description = " uma API, que irá armazenar informação sobre os rebeldes, bem como os recursos que eles possuem."))
+@OpenAPIDefinition(info = @Info(title = "Sistema para compartilhar recursos entre os rebeldes.", version = "1", description = " uma API, que irá armazenar informação sobre os rebeldes, bem como os recursos que eles possuem."))
 public class RebeldesApplication {
 
 	public static void main(String[] args) {

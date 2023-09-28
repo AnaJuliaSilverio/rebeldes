@@ -34,18 +34,33 @@ public class InventoryService {
     private ModelMapper modelMapper;
 
     public InventoryResponse updateInventory(InventoryRequest inventoryRequest, Long id) {
-        Inventory inventory= inventoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("inventário não encontrado"));
+        Inventory inventory = inventoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Inventário não encontrado"));
         Rebellious idRebel = inventory.getIdRebel();
         checksStatusRebel(idRebel.getId());
+
         List<PurchasingInventory> purchasingInventory = inventoryRequest.getPurchasingInventoryRequests().stream()
-                .map(item -> new PurchasingInventory(inventory, purchasingBasisService.findByName(item.getName())))
+                .map(item -> {
+                    PurchasingInventory existingPurchasingInventory = findExistingPurchasingInventory(inventory, item.getName());
+                    int updatedPrice = item.getQuantity() + existingPurchasingInventory.getQuantity();
+                    existingPurchasingInventory.setQuantity(updatedPrice);
+                    return existingPurchasingInventory;
+                })
                 .toList();
         List<PurchasingInventory> purchasingInventories = inventory.getPurchasingInventories();
         purchasingInventories.addAll(purchasingInventory);
-        inventory.setPurchasingInventories(purchasingInventory);
-
-        return modelMapper.map(inventory,InventoryResponse.class);
+        inventory.setPurchasingInventories(purchasingInventories);
+        inventoryRepository.save(inventory);
+        return modelMapper.map(inventory, InventoryResponse.class);
     }
+
+    private PurchasingInventory findExistingPurchasingInventory(Inventory inventory, String itemName) {
+        return inventory.getPurchasingInventories().stream()
+                .filter(purchasingInventory -> purchasingInventory.getIdPurchasingBasis().getName().equals(itemName))
+                .findFirst()
+                .orElse(new PurchasingInventory(inventory, purchasingBasisService.findByName(itemName)));
+    }
+
 
     public Inventory createInventory(RebelliousRequest rebelliousRequest) {
         Inventory inventory = new Inventory();
