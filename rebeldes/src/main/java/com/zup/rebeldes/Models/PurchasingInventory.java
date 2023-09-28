@@ -31,8 +31,14 @@ public class PurchasingInventory {
         return idInventory;
     }
 
-    public PurchasingInventory(PurchasingBasis idPurchasingBasis, int quantity) {
+    public PurchasingInventory(Inventory idInventory, PurchasingBasis idPurchasingBasis, int quantity) {
+        this.idInventory = idInventory;
         this.idPurchasingBasis = idPurchasingBasis;
         this.quantity = quantity;
+    }
+    public PurchasingInventory(Inventory idInventory, PurchasingBasis idPurchasingBasis) {
+        this.idInventory = idInventory;
+        this.idPurchasingBasis = idPurchasingBasis;
+
     }
 }
