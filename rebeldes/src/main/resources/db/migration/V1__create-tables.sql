@@ -1,5 +1,5 @@
 CREATE TABLE purchasing_basis (
-    id SERIAL PRIMARY KEY ,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(250) NOT NULL,
     price NUMERIC NOT NULL
 );

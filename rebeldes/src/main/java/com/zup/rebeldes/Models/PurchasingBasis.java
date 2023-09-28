@@ -17,5 +17,5 @@ public class PurchasingBasis {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
-    private double value;
+    private double price;
 }
