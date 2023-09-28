@@ -1,13 +1,18 @@
 package com.zup.rebeldes.Services;
 
-import com.zup.rebeldes.Models.Rebellious;
-import com.zup.rebeldes.Models.VoteTraitors;
+import com.zup.rebeldes.Models.*;
 import com.zup.rebeldes.Repositories.RebelliousRepository;
+import com.zup.rebeldes.dtos.InventoryRequest;
+import com.zup.rebeldes.dtos.PurchasingInventoryRequest;
+import com.zup.rebeldes.dtos.RebelliousRequest;
 import jakarta.persistence.EntityNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class RebelliousService {
@@ -15,8 +20,21 @@ public class RebelliousService {
     VoteTraitorsService voteTraitors;
     @Autowired
     RebelliousRepository rebelliousRepository;
+    @Lazy
+    @Autowired
+    InventoryService inventoryService;
 
-    public Rebellious createNewRebellious(Rebellious rebellious) {
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public Rebellious createNewRebellious(RebelliousRequest rebelliousRequest) {
+        Inventory inventory = inventoryService.createInventory(rebelliousRequest);
+        Rebellious rebellious = new Rebellious();
+        rebellious.setIdInventory(inventory);
+        rebellious.setName(rebelliousRequest.getName());
+        rebellious.setLocation(rebelliousRequest.getLocation());
+        rebellious.setAge(rebelliousRequest.getAge());
+        rebellious.setGender(rebelliousRequest.getGender());
         return rebelliousRepository.save(rebellious);
     }
 

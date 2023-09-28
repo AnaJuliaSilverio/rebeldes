@@ -3,6 +3,7 @@ package com.zup.rebeldes.controllers;
 import com.zup.rebeldes.Models.Inventory;
 import com.zup.rebeldes.Models.Rebellious;
 import com.zup.rebeldes.Services.RebelliousService;
+import com.zup.rebeldes.dtos.RebelliousRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class RebelliusController {
     @Autowired
     RebelliousService service;
     @PostMapping
-    public ResponseEntity<Rebellious> createRebel(@RequestBody Rebellious rebellious){
+    public ResponseEntity<Rebellious> createRebel(@RequestBody RebelliousRequest rebellious){
         Rebellious rebellious1 = service.createNewRebellious(rebellious);
         return ResponseEntity.status(HttpStatus.CREATED).body(rebellious1);
     }

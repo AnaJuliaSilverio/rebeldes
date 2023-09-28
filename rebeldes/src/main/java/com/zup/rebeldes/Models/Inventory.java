@@ -1,5 +1,6 @@
 package com.zup.rebeldes.Models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,4 +24,8 @@ public class Inventory {
     private Rebellious idRebel;
     @OneToMany(mappedBy ="idInventory",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PurchasingInventory> purchasingInventories;
+    @JsonManagedReference
+    public Set<PurchasingInventory> getPurchasingInventories() {
+        return purchasingInventories;
+    }
 }

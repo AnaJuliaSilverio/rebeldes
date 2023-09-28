@@ -16,7 +16,7 @@ public class PurchasingInventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn (name = "fk_inventory")
     private Inventory idInventory;
     @ManyToOne
@@ -24,4 +24,9 @@ public class PurchasingInventory {
     private PurchasingBasis idPurchasingBasis;
     @Column (nullable = false)
     private int quantity;
+
+    public PurchasingInventory(PurchasingBasis idPurchasingBasis, int quantity) {
+        this.idPurchasingBasis = idPurchasingBasis;
+        this.quantity = quantity;
+    }
 }

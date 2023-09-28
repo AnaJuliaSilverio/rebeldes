@@ -1,5 +1,6 @@
 package com.zup.rebeldes.Models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +26,10 @@ public class Rebellious {
     private Boolean status = false;
     @Column(nullable = false)
     private String location;
-    @OneToOne(mappedBy = "idRebel")
+    @OneToOne(mappedBy = "idRebel",cascade = CascadeType.ALL, orphanRemoval = true)
     private Inventory idInventory;
-
+    @JsonManagedReference
+    public Inventory getIdInventory() {
+        return idInventory;
+    }
 }
