@@ -1,5 +1,7 @@
 package com.zup.rebeldes.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +26,10 @@ public class PurchasingInventory {
     private PurchasingBasis idPurchasingBasis;
     @Column (nullable = false)
     private int quantity;
+    @JsonBackReference
+    public Inventory getIdInventory() {
+        return idInventory;
+    }
 
     public PurchasingInventory(PurchasingBasis idPurchasingBasis, int quantity) {
         this.idPurchasingBasis = idPurchasingBasis;
