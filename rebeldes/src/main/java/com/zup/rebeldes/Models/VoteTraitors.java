@@ -1,5 +1,7 @@
 package com.zup.rebeldes.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,4 +22,8 @@ public class VoteTraitors {
     private Rebellious idRebel;
     @Column (nullable = false)
     private int votes = 0;
+    @JsonBackReference
+    public Rebellious getIdRebel() {
+        return idRebel;
+    }
 }

@@ -1,13 +1,13 @@
 package com.zup.rebeldes.dtos;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class InventoryRequest {
-    private Set<PurchasingInventoryRequest> purchasingInventoryRequests;
+    private List<PurchasingInventoryRequest> purchasingInventoryRequests;
 }

@@ -3,8 +3,11 @@ package com.zup.rebeldes.Services;
 import com.zup.rebeldes.Models.PurchasingBasis;
 import com.zup.rebeldes.Models.Rebellious;
 import com.zup.rebeldes.Repositories.PurchasingBasisRepository;
+import com.zup.rebeldes.dtos.PurchasingBasisRequest;
+import com.zup.rebeldes.dtos.PurchasingBasisResponse;
 import com.zup.rebeldes.dtos.PurchasingInventoryRequest;
 import jakarta.persistence.EntityNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +20,18 @@ import java.util.stream.Collectors;
 public class PurchasingBasisService {
     @Autowired
     private PurchasingBasisRepository purchasingBasisRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
-    public PurchasingBasis create(PurchasingBasis purchasingBasis){
-        return purchasingBasisRepository.save(purchasingBasis);
+    public PurchasingBasisResponse create(PurchasingBasisRequest purchasingBasisRequest){
+        PurchasingBasis purchasingBasis = new PurchasingBasis();
+        modelMapper.map(purchasingBasisRequest,purchasingBasis);
+        purchasingBasisRepository.save(purchasingBasis);
+        return modelMapper.map(purchasingBasis,PurchasingBasisResponse.class);
     }
-    public List<PurchasingBasis> getAlls(){
-        return purchasingBasisRepository.findAll();
+    public List<PurchasingBasisResponse> getAlls(){
+        return purchasingBasisRepository.findAll()
+                .stream().map(purchasingBasis -> modelMapper.map(purchasingBasis,PurchasingBasisResponse.class)).toList();
     }
 
     public PurchasingBasis findByName(String name){

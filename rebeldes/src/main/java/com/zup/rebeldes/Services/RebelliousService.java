@@ -5,6 +5,7 @@ import com.zup.rebeldes.Repositories.RebelliousRepository;
 import com.zup.rebeldes.dtos.InventoryRequest;
 import com.zup.rebeldes.dtos.PurchasingInventoryRequest;
 import com.zup.rebeldes.dtos.RebelliousRequest;
+import com.zup.rebeldes.dtos.RebelliousResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,25 +28,33 @@ public class RebelliousService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Rebellious createNewRebellious(RebelliousRequest rebelliousRequest) {
+    public RebelliousResponse createNewRebellious(RebelliousRequest rebelliousRequest) {
         Inventory inventory = inventoryService.createInventory(rebelliousRequest);
         Rebellious rebellious = new Rebellious();
+        VoteTraitors voteTraitors1 = new VoteTraitors();
+
         rebellious.setIdInventory(inventory);
+        rebellious.setVoteTraitors(voteTraitors1);
         rebellious.setName(rebelliousRequest.getName());
         rebellious.setLocation(rebelliousRequest.getLocation());
         rebellious.setAge(rebelliousRequest.getAge());
         rebellious.setGender(rebelliousRequest.getGender());
-        return rebelliousRepository.save(rebellious);
+        inventory.setIdRebel(rebellious);
+        voteTraitors1.setIdRebel(rebellious);
+        rebelliousRepository.save(rebellious);
+
+        return modelMapper.map(rebellious, RebelliousResponse.class);
     }
 
-    public List<Rebellious> getAllRebellious() {
-        return rebelliousRepository.findAll();
+    public List<RebelliousResponse> getAllRebellious() {
+        return rebelliousRepository.findAll().stream()
+                .map(rebellious -> modelMapper.map(rebellious,RebelliousResponse.class)).toList();
     }
 
-    public Rebellious updateRebellious(Rebellious rebellious) {
-        Rebellious rebellious1 = rebelliousRepository.findById(rebellious.getId()).orElseThrow(() -> new EntityNotFoundException("Rebelde não encontrado"));
-        rebellious1.setLocation(rebellious.getLocation());
-        return rebelliousRepository.save(rebellious1);
+    public RebelliousResponse updateRebellious(RebelliousResponse rebelliousResponse) {
+        Rebellious rebellious = rebelliousRepository.findById(rebelliousResponse.getId()).orElseThrow(() -> new EntityNotFoundException("Rebelde não encontrado"));
+        rebellious.setLocation(rebelliousResponse.getLocation());
+        return rebelliousResponse;
     }
     public Rebellious findById(Long id){
         return rebelliousRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Rebelde não encontrado"));
@@ -63,6 +72,16 @@ public class RebelliousService {
     public void setStatus(Rebellious rebellious){
         rebellious.setStatus(true);
         rebelliousRepository.save(rebellious);
+    }
+    public Double percentageOfTraitors(){
+        long traitors = rebelliousRepository.countRebelsWithStatusTrue();
+        long numberOfRebel= rebelliousRepository.count();
+        return (double) ((traitors*100)/numberOfRebel);
+    }
+    public Double percentageOfRebel(){
+        long rebels = rebelliousRepository.countRebelsWithStatusFalse();
+        long numberOfRebel= rebelliousRepository.count();
+        return (double) ((rebels*100)/numberOfRebel);
     }
 
 }
