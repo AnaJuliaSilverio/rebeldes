@@ -50,6 +50,14 @@ public class VoteTraitors {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 }
+Linguagem do banco de dados: MySql{
+    CONSULTA PARA TABELAS:
+select r."name",pi.fk_inventory,pb."name",pi.quantity
+from  rebel as r
+inner join inventory as i on r.id = i.fk_rebel
+INNER JOIN purchasing_inventory AS pi ON i.id = PI.fk_inventory 
+INNER JOIN purchasing_basis AS pb ON pb.id = PI.fk_purchasing_basis 
+}
 ~~~
 ### **Pessoa Autora**
 Ana Julia Alves Ferreira
