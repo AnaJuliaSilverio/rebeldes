@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -24,13 +25,13 @@ public class Inventory {
     @JoinColumn (name = "fk_rebel")
     private Rebellious idRebel;
     @OneToMany(mappedBy ="idInventory",cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<PurchasingInventory> purchasingInventories;
+    private List<PurchasingInventory> purchasingInventories;
     @JsonBackReference
     public Rebellious getIdRebel() {
         return idRebel;
     }
     @JsonManagedReference
-    public Set<PurchasingInventory> getPurchasingInventories() {
+    public List<PurchasingInventory> getPurchasingInventories() {
         return purchasingInventories;
     }
 }

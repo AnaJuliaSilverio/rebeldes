@@ -26,10 +26,16 @@ public class Rebellious {
     private Boolean status = false;
     @Column(nullable = false)
     private String location;
-    @OneToOne(mappedBy = "idRebel",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "idRebel",cascade=CascadeType.ALL)
     private Inventory idInventory;
+    @OneToOne(mappedBy = "idRebel", cascade = CascadeType.ALL)
+    private VoteTraitors voteTraitors;
     @JsonManagedReference
     public Inventory getIdInventory() {
         return idInventory;
+    }
+    @JsonManagedReference
+    public VoteTraitors getVoteTraitors() {
+        return voteTraitors;
     }
 }
